@@ -6,7 +6,7 @@
     <referenceContainer name="page.wrapper">
         <container name="shipping.countdown" htmlTag="div" before="main.content">
             <!-- must have content to display -->
-            <block class="Magento\Framework\View\Element\Template" name="shipping.countdown.container" template="Bounteous_ShippingCountdown::progressbar.phtml" />
+            <block class="Bounteous\ShippingCountdown\Block\Progressbar" name="shipping.countdown.container" template="Bounteous_ShippingCountdown::progressbar.phtml" />
         </container>
     </referenceContainer>
 </page>

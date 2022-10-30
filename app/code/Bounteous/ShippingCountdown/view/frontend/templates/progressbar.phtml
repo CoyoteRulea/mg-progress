@@ -1,9 +1,14 @@
+<?php 
+    $timezoneArray = $block->getStoreTimestamp();
+    $customer = $block->getCustomerFirstName();
+    $customerText = isset($customer) ? "Hello $customer, place your order by 3:00pm* for Same Day Shipping!" : 'Place your order by 3:00pm* for Same Day Shipping!';
+?>
 
 <div class="progressbar-header">
-    <span class="progressbar-header-title">Place your order by 3:00pm for Same Day Shipping!</span>
+    <span class="progressbar-header-title"><?= $customerText ?></span>
+    <span id="disclaimerText" class="progressbar-header-disclaimer"></span>
 </div>
 <div style="width: 300px;" class="progressbar-container">
-
     <div id="progressbar" class="uk-progress uk-progress-success">
         <div class="uk-progress-bar" style="width: 0%;">0%</div>
     </div>
@@ -16,61 +21,50 @@
 requirejs( [ 'require', 'jquery',  'UIkit' ],
 function( require, $, UIkit ) {
 
-    $(document).ready(function () {             
-        var bar = document.getElementById('progressbar');  
-        var barmessage = $('.uk-progress-bar');
-
-        bar.max  = 50;
-        bar.value  = 1;                               
-        var percent = Math.floor(( bar.value  /  bar.max) * 100);
-        var progressText = '';
-        switch (Math.floor(percent / 20)) {
-            case '2':
-                progressText = 'Don\'t waste time.';
-                break;
-            case '3':
-                progressText = 'Time flies by!!';
-                break;
-            case '4':
-                progressText = 'Hurry Up for free shipping!!';
-                break;
+    $(document).ready(function () {      
+        var formatDate = function(date) {
+            return date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear() + " " +  ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2) + ' ' + (date.getHours() < 12 ? 'AM' : 'PM');
         }
-        barmessage.css('width', percent + '%').text(progressText);        
+
+        var bar         = document.getElementById('progressbar');  
+        bar.value       = <?php echo $timezoneArray['elapsedtime']; ?>;
+        bar.max         = <?php echo $timezoneArray['limittime']; ?>;
+        var visitortime = new Date();
+        var visitortz   = -visitortime.getTimezoneOffset();
+        var utcDatetime = new Date('<?php echo $timezoneArray['limittimeutc']; ?>')
+        var disclaimer  = $('#disclaimerText');                             
+        var barmessage  = $('.uk-progress-bar');                               
+        var progressText = '';
+
+        // Calculate local shipping time with utc shipping time
+        utcDatetime.setMinutes(utcDatetime.getMinutes() + visitortz)
+        // Set disclaimer timezone difference
+        disclaimer.text('*<?php echo $timezoneArray['storetimezone']; ?> time. Your ' + formatDate(utcDatetime));
+  
         
         var animate = setInterval(function () {
                 bar.value += 1;
                 var percent = Math.floor(( bar.value  /  bar.max) * 100);
-                barmessage.css('width', percent + '%').text(bar.value + ' out of ' + bar.max + ' Completed.');
-                if (bar.value >= bar.max) {
-                clearInterval(animate);
+
+                switch (Math.floor(percent / 20)) {
+                    case 2:
+                        progressText = 'Don\'t waste time.';
+                        break;
+                    case 3:
+                        progressText = 'Time flies by!!';
+                        break;
+                    case 4:
+                        progressText = 'Hurry Up for free shipping!!';
+                        break;
                 }
+
+                if (bar.value >= bar.max) {
+                    clearInterval(animate);
+                    progressText = 'Sorry, Free Shipping until tomorrow';
+                }
+                barmessage.css('width', percent + '%').text(progressText);
 
         }, 1000);
     });
 });
-</script>
-<script>
-/*
-requirejs( [ 'require', 'jquery',  'uikit' ],
-function( require, $, uikit ) {
-            
-   $(window).load(function () {             
-        var bar = document.getElementById('progressbar');                                
-        bar.max  = 50; // Total Steps
-        bar.value  = 1; // completed Steps                
-        var barmessage = $('.uk-progress-bar');                
-        var percent = Math.floor(( bar.value  /  bar.max) * 100);
-        barmessage.css('width', percent + '%').text(bar.value + ' out of '+bar.max+' Completed.');        
-        
-        var animate = setInterval(function () {
-                bar.value += 1;
-                var percent = Math.floor(( bar.value  /  bar.max) * 100);
-                barmessage.css('width', percent + '%').text(bar.value + ' out of '+bar.max+' Completed.');
-                if (bar.value >= bar.max) {
-                clearInterval(animate);
-                }
-
-        }, 1000);
-    });                 
-});*/
 </script>
