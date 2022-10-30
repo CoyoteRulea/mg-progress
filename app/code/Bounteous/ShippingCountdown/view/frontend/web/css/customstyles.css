@@ -1,0 +1,29 @@
+a {
+    color: red;
+}
+
+.progressbar-header-title {
+    background-color: yellow;
+}
+
+#progressbar .uk-progress {
+    height: 25px;
+}
+
+.uk-progress {
+    vertical-align: baseline;
+    display: block;
+    width: 100%;
+    border: 0;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+    height: 25px;
+    border-radius: 500px;
+    overflow: hidden;
+}
+
+.uk-progress-bar {
+    background-color: green;
+    font-size: 12px;
+    height: 100%;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0"?> 
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Bounteous_ShippingCountdown/css/customstyles.css"/>
+    </head>
+    <referenceContainer name="page.wrapper">
+        <container name="shipping.countdown" htmlTag="div" before="main.content">
+            <!-- must have content to display -->
+            <block class="Magento\Framework\View\Element\Template" name="shipping.countdown.container" template="Bounteous_ShippingCountdown::progressbar.phtml" />
+        </container>
+    </referenceContainer>
+</page>
