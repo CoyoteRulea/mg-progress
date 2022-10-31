@@ -77,6 +77,9 @@ function( require, $, UIkit ) {
                     barmessage.addClass('finalized');
                     $('#sc-id--label-nextday').removeClass('disabled');
                     $('#sc-id-label--sameday').addClass('disabled');
+                    barmessage.css('width', '100%').text(progressText);
+
+                    return;
                 }
                 barmessage.css('width', percent + '%').text(progressText);
 
