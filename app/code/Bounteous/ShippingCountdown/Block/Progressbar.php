@@ -40,7 +40,7 @@ private $currentCustomer;
         // Set time to calculate shipping time
         $date = (new \DateTime())->setTimestamp($returnArray['currenttime']);
         $startDayTime = new \DateTime($date->format('Y-m-d ') . '00:00:01');
-        $shippingHour = new \DateTime($date->format('Y-m-d ') . '09:40:00');
+        $shippingHour = new \DateTime($date->format('Y-m-d ') . '15:00:00');
         // Get total seconds of free shipping at day
         $returnArray['limittime'] = ($shippingHour->getTimestamp() - $startDayTime->getTimestamp());
         // Get total of elapsed minutes

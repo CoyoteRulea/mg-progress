@@ -10,20 +10,210 @@ a {
     height: 25px;
 }
 
-.uk-progress {
-    vertical-align: baseline;
-    display: block;
-    width: 100%;
-    border: 0;
-    background-color: #f8f8f8;
-    margin-bottom: 20px;
-    height: 25px;
-    border-radius: 500px;
-    overflow: hidden;
+header.page-header, .sections.nav-sections {
+    margin-bottom: 0px;
 }
 
 .uk-progress-bar {
     background-color: green;
     font-size: 12px;
     height: 100%;
+}
+
+.shipping-countdown {
+    width: 100%;
+}
+.shipping-countdown .sc-container {
+    display: flex;
+}
+
+.shipping-countdown .sc-banner--main {
+    width: 85%;
+    background-color: #FFE761;
+    margin-bottom: 10px;
+    border-bottom: #f8f8f8 3px solid;
+    border-right: #f8f8f8 3px solid;
+}
+
+.shipping-countdown .sc-banner--main  .sc-main--header {
+    padding: 10px;
+}
+
+.shipping-countdown .sc-banner--icon {
+    width: 15%;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.shipping-countdown .sc-main--bar-display {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.shipping-countdown .sc-main--bar-display div[class^="sc-bar-display--label"] {
+    margin: 7px 0;
+}
+
+.shipping-countdown .sc-main--header > span,
+.shipping-countdown .sc-main--bar-display div span {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+.shipping-countdown .sc-bar-display--bar-container {
+    padding: 0 5px;
+}
+
+.shipping-countdown .sc-main--header .shipping-time,
+#sc-id--disclaimer {
+    text-align: right;
+    color:#218a2a;
+}
+
+
+.shipping-countdown .sc-main--header .customer {
+    color: #b84a01;
+}
+
+.shipping-countdown .sc-main--header .customer,
+.shipping-countdown .sc-main--header .shipping-time {
+    font-weight: bold;
+}
+
+#sc-id--disclaimer {
+    font-size: 10px;
+}
+
+.shipping-countdown .sc-bar-container--progressbar {
+    display: block;
+    width: 100%;
+    border: 0;
+    background-color: #f8f8f8;
+    height: 25px;
+    border-radius: 500px;
+    overflow: hidden;
+}
+
+.shipping-countdown .sc-progressbar--progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    font-size: 9px;
+    height: 100%;
+    padding: 0 3px;
+    color: #ffae00;
+}
+
+#sc-id--label-nextday {
+	box-shadow: 3px 4px 0px 0px #8a2a21;
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
+	background-color:#c62d1f;
+	border-radius:18px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:10px;
+    font-weight: bold;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+
+#sc-id--label-nextday.disabled {
+	background:linear-gradient(to bottom, #ceb5b3 5%, #d68f88 100%);
+	background-color:#d37f79;
+	border:1px solid #b48681;
+	box-shadow: 3px 4px 0px 0px #9e8d8c;
+    color: rgb(168, 166, 166);
+}
+
+#sc-id-label--sameday {
+	box-shadow: 3px 4px 0px 0px #3e7327;
+	background:linear-gradient(to bottom, #60a540 5%, #49862a 100%);
+	background-color:#77b55a;
+	border-radius:15px;
+	border:1px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:10px;
+    font-weight: bold;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #5b8a3c;
+}
+
+#sc-id-label--sameday.disabled {
+	background:linear-gradient(to bottom, #bfceb8 5%, #80a56f 100%);
+	background-color:#739165;
+	border:1px solid #597749;
+	box-shadow: 3px 4px 0px 0px #607258;
+    color: rgb(168, 166, 166);
+}
+
+.shipping-countdown .initializing {
+    background-color: #a1b697;
+}
+
+.shipping-countdown .finalized {
+    background-color: red;
+}
+
+.shipping-countdown .sc-header--title {
+    color: #1214aa;
+}
+
+@media screen and (min-width: 500px) {
+    .shipping-countdown .sc-banner--main {
+        width: 92%;
+    }
+
+    .shipping-countdown .sc-banner--icon {
+        width: 8%;
+    }
+
+    .shipping-countdown .sc-progressbar--progress {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .shipping-countdown .sc-main--bar-display {
+        display: flex;
+        justify-content: space-between;
+        padding-right: 5px;
+    }
+
+    .shipping-countdown .sc-bar-display--bar-container {
+        padding: 7px 5px;
+        width: 75%;
+    }
+
+    .shipping-countdown .sc-header--title {
+        font-size: 16px;
+    }
+}
+
+
+@media screen and (min-width: 824px) {
+    .shipping-countdown .sc-bar-display--bar-container {
+        width: 82%;
+    }
+
+    #sc-id-label--sameday {
+        margin-right: 10px;
+    }
+
+    #sc-id--label-nextday {
+        margin-left: 10px;
+    }
+
+    .shipping-countdown .sc-header--title {
+        font-size: 20px;
+    }
 }

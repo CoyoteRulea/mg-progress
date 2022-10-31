@@ -1,22 +1,30 @@
 <?php 
     $timezoneArray = $block->getStoreTimestamp();
     $customer = $block->getCustomerFirstName();
-    $customerText = isset($customer) ? "Hello $customer, place your order by 3:00pm* for Same Day Shipping!" : 'Place your order by 3:00pm* for Same Day Shipping!';
+    $customerText = isset($customer) ? "Hello <span class=\"customer\">$customer</span>, place your order by <span class=\"shipping-time\">3:00 pm*</span> for Same Day Shipping!" : 'Place your order by 3:00pm* for Same Day Shipping!';
 ?>
+<div class="sc-container">
+    <div class="sc-banner--main">
+        <div class="sc-main--header">
+            <span id="sc-id--disclaimer" class="sc-header--disclaimer"></span>
+            <span class="sc-header--title"><?= $customerText ?></span>
+        </div>
 
-<div class="progressbar-header">
-    <span class="progressbar-header-title"><?= $customerText ?></span>
-    <span id="disclaimerText" class="progressbar-header-disclaimer"></span>
-</div>
-<div style="width: 300px;" class="progressbar-container">
-    <div id="progressbar" class="uk-progress uk-progress-success">
-        <div class="uk-progress-bar" style="width: 0%;">0%</div>
+        <div class="sc-main--bar-display">
+            <div class="sc-bar-display--label-nextday" id="sc-id--label-nextday"><span>Next Day</span></div>
+            <div class="sc-bar-display--bar-container" id="sc-id--bar-container">
+                <div  class="sc-bar-container--progressbar" id="sc-bar-container-progressbar">
+                    <div class="sc-progressbar--progress initializing" id="sc-id--progress">Trainning the watch... Dog!</div>
+                </div>
+            </div>
+            <div class="sc-bar-display--label-sameday" id="sc-id-label--sameday"><span>Same Day</span></div>
+        </div>
+    </div>
+    <div class="sc-banner--icon">
+        <img src="<?php echo $this->getViewFileUrl('Bounteous_ShippingCountdown::images/shipping.png'); ?>" alt="Run for free shipping!!" />
     </div>
 </div>
-<div class="progressbar-display">
-    <div id="progressbar-nextday">Next Day</div>
-    <div id="progressbar-sameday">Same Day</div>
-</div>
+
 <script>
 requirejs( [ 'require', 'jquery',  'UIkit' ],
 function( require, $, UIkit ) {
@@ -26,14 +34,14 @@ function( require, $, UIkit ) {
             return date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear() + " " +  ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2) + ' ' + (date.getHours() < 12 ? 'AM' : 'PM');
         }
 
-        var bar         = document.getElementById('progressbar');  
+        var bar         = $('#sc-id--bar-container');  
         bar.value       = <?php echo $timezoneArray['elapsedtime']; ?>;
         bar.max         = <?php echo $timezoneArray['limittime']; ?>;
         var visitortime = new Date();
         var visitortz   = -visitortime.getTimezoneOffset();
         var utcDatetime = new Date('<?php echo $timezoneArray['limittimeutc']; ?>')
-        var disclaimer  = $('#disclaimerText');                             
-        var barmessage  = $('.uk-progress-bar');                               
+        var disclaimer  = $('#sc-id--disclaimer');                             
+        var barmessage  = $('#sc-id--progress');                               
         var progressText = '';
 
         // Calculate local shipping time with utc shipping time
@@ -41,7 +49,10 @@ function( require, $, UIkit ) {
         // Set disclaimer timezone difference
         disclaimer.text('*<?php echo $timezoneArray['storetimezone']; ?> time. Your ' + formatDate(utcDatetime));
   
-        
+        // To remove on init progress
+        barmessage.removeClass('initializing');
+        $('#sc-id--label-nextday').addClass('disabled');
+
         var animate = setInterval(function () {
                 bar.value += 1;
                 var percent = Math.floor(( bar.value  /  bar.max) * 100);
@@ -56,11 +67,16 @@ function( require, $, UIkit ) {
                     case 4:
                         progressText = 'Hurry Up for free shipping!!';
                         break;
+                    default:
+                        progressText = 'Tic, toc';
                 }
 
                 if (bar.value >= bar.max) {
                     clearInterval(animate);
                     progressText = 'Sorry, Free Shipping until tomorrow';
+                    barmessage.addClass('finalized');
+                    $('#sc-id--label-nextday').removeClass('disabled');
+                    $('#sc-id-label--sameday').addClass('disabled');
                 }
                 barmessage.css('width', percent + '%').text(progressText);
 
